@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    image: 375202195565.dkr.ecr.us-east-1.amazonaws.com/sample-devops-app:gunicorn-1.0.1
+    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    expose:
+      - 5000
+    env_file:
+      - .env
+  nginx:
+    image: 375202195565.dkr.ecr.us-east-1.amazonaws.com/nginx-proxy:1.0.1
+    ports:
+      - 80:80
+    depends_on:
+      - web
